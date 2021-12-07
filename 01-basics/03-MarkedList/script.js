@@ -37,11 +37,10 @@ const Calculator = defineComponent({
     filteredList() {
       return emails.map((email) => ({
         title: email,
-        class: this.inputValue ? email.toLowerCase().includes(this.inputValue.toLowerCase()) ? 'marked' : '' : '',
+        marked: this.inputValue ? (email.toLowerCase().includes(this.inputValue.toLowerCase()) ? true : false) : false,
       }));
     },
   },
 });
-
 
 createApp(Calculator).mount('#app');

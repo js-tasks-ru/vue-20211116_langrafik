@@ -22,14 +22,6 @@ const Calculator = defineComponent({
       return 0;
     },
   },
-  methods: {
-    changeOpertaion({target}) {
-      if (target.type === 'radio') {
-        const { name, value } = target;
-        this.operation = name;
-      }
-    }
-  }
 });
 
 createApp(Calculator).mount('#app');
