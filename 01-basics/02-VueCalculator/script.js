@@ -10,13 +10,13 @@ const Calculator = defineComponent({
     result() {
       switch (this.operation) {
         case '+':
-          return Number(this.leftValue) + Number(this.rightValue);
+          return this.leftValue + this.rightValue;
         case '-':
-          return Number(this.leftValue) - Number(this.rightValue);
+          return this.leftValue - this.rightValue;
         case '*':
-          return Number(this.leftValue) * Number(this.rightValue);
+          return this.leftValue * this.rightValue;
         case '/':
-          return Math.floor(Number(this.leftValue) / Number(this.rightValue));
+          return Math.floor(this.leftValue / this.rightValue);
       }
 
       return 0;

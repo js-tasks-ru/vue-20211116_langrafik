@@ -31,7 +31,7 @@
 <div id='app' class='container'>
   <div class='row'>
     <div class='col'>
-      <input type='number' v-model='leftValue' />
+      <input type='number' v-model.number='leftValue' />
     </div>
     <div class='col' style='display: flex; flex-direction: column; font-family: emoji'>
       <label><input id='+' name='+' type='radio' v-model='operation' value='+' /> ➕</label>
@@ -40,7 +40,7 @@
       <label><input id='/' name='/' type='radio' v-model='operation' value='/' /> ➗</label>
     </div>
     <div class='col'>
-      <input type='number' v-model='rightValue' />
+      <input type='number' v-model.number='rightValue' />
     </div>
 
     <div class='col'>=</div>

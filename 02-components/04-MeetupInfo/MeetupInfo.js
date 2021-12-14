@@ -20,10 +20,14 @@ export default defineComponent({
 
   computed: {
     meetupDate() {
-      return new Date(this.date);
+      return new Date(this.date).toISOString().split('T')[0];
     },
     meetupDateString() {
-      return this.meetupDate.toLocaleDateString(navigator.language);
+      return new Date(this.date).toLocaleDateString(navigator.language, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
     },
   },
 

@@ -19,11 +19,11 @@ export default defineComponent({
     },
   },
 
-  data: function() {
+  data: function () {
     return {
       isLoading: true,
       error: '',
-      meetup: {},
+      meetup: null,
     };
   },
   watch: {
@@ -33,7 +33,7 @@ export default defineComponent({
         try {
           this.meetup = await fetchMeetupById(newId);
         } catch (e) {
-          this.error = e;
+          this.error = e.message;
         }
         this.isLoading = false;
       },
