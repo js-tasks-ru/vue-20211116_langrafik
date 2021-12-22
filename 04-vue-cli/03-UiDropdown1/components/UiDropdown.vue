@@ -1,18 +1,21 @@
 <template>
-  <div class="dropdown dropdown_opened">
+  <div class="dropdown" :class="{ dropdown_opened: isOpened }" @click="isOpened = !isOpened">
     <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+<!--      <ui-icon icon="dropDownIcon" class="dropdown__icon" />-->
+      <span>{{ dropDownTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-for="option in options" :key="option.value" class="dropdown__menu" role="listbox">
+      <button
+        class="dropdown__item dropdown__item_icon"
+        role="option"
+        type="button"
+        @click="$emit('onUpdate:modelValue', $event)"
+      >
+        <!--        нельзя менять prop напрямую-->
+<!--        @click="modelValue = option.value"-->
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -25,6 +28,38 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: {
+      type: Array,
+      required: true,
+    },
+
+    modelValue: {
+      type: String,
+    },
+
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['onUpdate:modelValue'],
+
+  data() {
+    return {
+      isOpened: false,
+    };
+  },
+
+  computed: {
+    dropDownTitle() {
+      return this.modelValue ? this.options[this.modelValue]?.text : this.title;
+    },
+    dropDownIcon() {
+      return this.modelValue ? this.options[this.modelValue]?.icon : this.title;
+    },
+  },
 };
 </script>
 
