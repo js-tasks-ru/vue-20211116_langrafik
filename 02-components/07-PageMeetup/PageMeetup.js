@@ -31,6 +31,7 @@ export default defineComponent({
       immediate: true,
       async handler(newId) {
         try {
+          this.isLoading = true;
           this.meetup = await fetchMeetupById(newId);
         } catch (e) {
           this.error = e.message;
@@ -46,10 +47,9 @@ export default defineComponent({
     <ui-container v-if='isLoading'>
       <ui-alert>Загрузка...</ui-alert>
     </ui-container>
-    <meetup-view v-else :meetup='meetup' />
-
-    <ui-container v-if='error'>
+    <ui-container v-else-if='error'>
       <ui-alert>{{ error }}</ui-alert>
     </ui-container>
+    <meetup-view v-else :meetup='meetup' />
     </div>`,
 });
