@@ -1,19 +1,20 @@
 <template>
   <div class="dropdown" :class="{ dropdown_opened: isOpened }" @click="isOpened = !isOpened">
     <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-<!--      <ui-icon icon="dropDownIcon" class="dropdown__icon" />-->
+      <!--      <ui-icon icon="dropDownIcon" class="dropdown__icon" />-->
       <span>{{ dropDownTitle }}</span>
     </button>
 
-    <div v-for="option in options" :key="option.value" class="dropdown__menu" role="listbox">
+    <div class="dropdown__menu" role="listbox">
       <button
+        v-for="option in options"
+        :key="option.value"
         class="dropdown__item dropdown__item_icon"
         role="option"
         type="button"
         @click="$emit('onUpdate:modelValue', $event)"
       >
-        <!--        нельзя менять prop напрямую-->
-<!--        @click="modelValue = option.value"-->
+        <!--        @click="modelValue = option.value"-->
         <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }}
       </button>

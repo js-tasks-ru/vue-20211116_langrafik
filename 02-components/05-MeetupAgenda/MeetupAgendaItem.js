@@ -25,7 +25,7 @@ export default defineComponent({
     <div class='agenda-item__col'>
       <img :src='agendaItemIcon' class='icon' alt='key' />
     </div>
-    <div class='agenda-item__col'>00:00 - 00:00</div>
+    <div class='agenda-item__col'>{{ agendaItem.startsAt }} - {{ agendaItem.endsAt }}</div>
     <div class='agenda-item__col'>
       <h3 class='agenda-item__title'>{{ agendaTitle }}</h3>
       <p v-if='agendaItem.type === "talk"' class='agenda-item__talk'>
