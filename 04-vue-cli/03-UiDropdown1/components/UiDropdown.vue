@@ -1,21 +1,24 @@
 <template>
   <div class="dropdown" :class="{ dropdown_opened: isOpened }" @click="isOpened = !isOpened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <!--      <ui-icon icon="dropDownIcon" class="dropdown__icon" />-->
+    <button
+      type="button"
+      :class="{ dropdown__toggle_icon : needToShowOptionIcon}"
+      class="dropdown__toggle">
+      <ui-icon :icon="dropDownIcon" class="dropdown__icon"/>
       <span>{{ dropDownTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
+    <div v-show="isOpened" class="dropdown__menu" role="listbox">
       <button
         v-for="option in options"
         :key="option.value"
-        class="dropdown__item dropdown__item_icon"
+        :class="{ dropdown__item_icon : needToShowOptionIcon}"
+        class="dropdown__item"
         role="option"
         type="button"
-        @click="$emit('onUpdate:modelValue', $event)"
+        @click="$emit('update:modelValue', option.value)"
       >
-        <!--        @click="modelValue = option.value"-->
-        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon"/>
         {{ option.text }}
       </button>
     </div>
@@ -28,7 +31,7 @@ import UiIcon from './UiIcon';
 export default {
   name: 'UiDropdown',
 
-  components: { UiIcon },
+  components: {UiIcon},
 
   props: {
     options: {
@@ -55,11 +58,14 @@ export default {
 
   computed: {
     dropDownTitle() {
-      return this.modelValue ? this.options[this.modelValue]?.text : this.title;
+      return this.modelValue ? this.options.find(opt => opt.value === this.modelValue).text : this.title;
     },
     dropDownIcon() {
-      return this.modelValue ? this.options[this.modelValue]?.icon : this.title;
+      return this.modelValue ? this.options.find(opt => opt.value === this.modelValue).icon : null;
     },
+    needToShowOptionIcon() {
+      return this.options.some(opt => opt.icon)
+    }
   },
 };
 </script>
