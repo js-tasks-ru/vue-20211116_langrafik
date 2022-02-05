@@ -23,10 +23,24 @@ export default {
   },
   computed: {
     toastClass() {
-      return this.toastType === 'success' ? 'toast_success' : 'toast_error';
+      switch (this.toastType) {
+        case 'success':
+          return 'toast_success';
+        case 'error':
+          return 'toast_error';
+        default:
+          return '';
+      }
     },
     toastIcon() {
-      return this.toastType === 'success' ? 'check-circle' : 'alert-circle';
+      switch (this.toastType) {
+        case 'success':
+          return 'check-circle';
+        case 'error':
+          return 'alert-circle';
+        default:
+          return '';
+      }
     },
   },
 };

@@ -17,23 +17,24 @@ export default {
 
   data: () => {
     return {
-      stack: [],
+      queue: [],
+      id: 0,
     };
   },
 
   methods: {
     generateId() {
-      return new Date().valueOf();
+      return this.id++;
     },
     destroyToasterTimer(id, delay) {
       setTimeout(() => {
-        const toastIndex = this.stack.findIndex((t) => t.id === id);
-        this.stack.splice(toastIndex, 1);
+        const toastIndex = this.queue.findIndex((t) => t.id === id);
+        this.queue.splice(toastIndex, 1);
       }, delay);
     },
     success(message = '', visibilityTime = 5000) {
       const id = this.generateId();
-      this.stack.push({
+      this.queue.push({
         type: 'success',
         id,
         message,
@@ -42,7 +43,8 @@ export default {
     },
     error(message = '', visibilityTime = 5000) {
       const id = this.generateId();
-      this.stack.push({
+      this.queue.push({
+        id,
         type: 'error',
         message,
       });
