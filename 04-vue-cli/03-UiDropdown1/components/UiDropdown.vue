@@ -1,18 +1,22 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{ dropdown_opened: isOpened }" @click="isOpened = !isOpened">
+    <button type="button" :class="{ dropdown__toggle_icon: needToShowOptionIcon }" class="dropdown__toggle">
+      <ui-icon :icon="dropDownIcon" class="dropdown__icon" />
+      <span>{{ dropDownTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-show="isOpened" class="dropdown__menu" role="listbox">
+      <button
+        v-for="option in options"
+        :key="option.value"
+        :class="{ dropdown__item_icon: needToShowOptionIcon }"
+        class="dropdown__item"
+        role="option"
+        type="button"
+        @click="$emit('update:modelValue', option.value)"
+      >
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -25,6 +29,45 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: {
+      type: Array,
+      required: true,
+    },
+
+    modelValue: {
+      type: String,
+    },
+
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['onUpdate:modelValue'],
+
+  data() {
+    return {
+      isOpened: false,
+    };
+  },
+
+  computed: {
+    currentOption() {
+      return this.modelValue ? this.options.find((opt) => opt.value === this.modelValue) : null;
+    },
+
+    dropDownTitle() {
+      return this.currentOption ? this.currentOption.text : this.title;
+    },
+    dropDownIcon() {
+      return this.currentOption ? this.currentOption.icon : null;
+    },
+    needToShowOptionIcon() {
+      return this.options.some((opt) => opt.icon);
+    },
+  },
 };
 </script>
 

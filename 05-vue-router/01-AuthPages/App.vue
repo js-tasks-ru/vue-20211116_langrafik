@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <meetups-header />
+    <meetups-header/>
     <main class="main">
-      <div>CURRENT PAGE</div>
+      <router-view/>
     </main>
-    <meetups-footer />
+    <meetups-footer/>
   </div>
 </template>
 
